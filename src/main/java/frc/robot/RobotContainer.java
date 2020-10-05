@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ActivateFeeder;
-import frc.robot.subsystems.Feeder;
+import frc.robot.commands.coreCommands.FeederCommands.ActivateFeeder;
+import frc.robot.subsystems.FeederSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -26,14 +26,14 @@ public class RobotContainer {
 
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final Feeder feeder;
+  private final FeederSubsystem feeder;
   private final XboxController joystick1;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
-    this.feeder = new Feeder();
+    this.feeder = new FeederSubsystem();
     this.joystick1 = new XboxController(0);
     configureButtonBindings();
   }
@@ -45,8 +45,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton bActivateFeeder = new JoystickButton(this.joystick1, 0);
-    bActivateFeeder.whileHeld(new ActivateFeeder(this.feeder, 0.5));
+    JoystickButton bActivateFeeder = new JoystickButton(this.joystick1, 1);
+    bActivateFeeder.whenHeld(new ActivateFeeder(this.feeder, 0.8));
   }
 
 

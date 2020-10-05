@@ -5,18 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.coreCommands.FeederCommands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.FeederSubsystem;
 
 public class ActivateFeeder extends CommandBase {
-  private final Feeder feeder;
-  private final double power;
   /**
    * Creates a new ActivateFeeder.
    */
-  public ActivateFeeder(Feeder feeder, double power) {
+
+  private final FeederSubsystem feeder;
+  private final double power;
+
+  public ActivateFeeder(FeederSubsystem feeder, double power) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.feeder = feeder;
     this.power = power;
