@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -37,6 +38,7 @@ public class DriveTrain extends DiffDrivetrain {
     this.configFollowers();
     this.setNeutralModes();
     this.setInvertions();
+    this.setSensors();
   }
 
   private void createMotors() {
@@ -73,6 +75,11 @@ public class DriveTrain extends DiffDrivetrain {
     this.middleRight.setInverted(InvertType.FollowMaster);
     this.rearLeft.setInverted(InvertType.FollowMaster);
     this.rearRight.setInverted(InvertType.FollowMaster);
+  }
+
+  private void setSensors(){
+    this.masterLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    this.masterRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
   }
   @Override
   public void periodic() {
