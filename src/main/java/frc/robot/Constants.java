@@ -17,5 +17,15 @@ package frc.robot;
  */
 public final class Constants {
     public final static int kFeederPort = 0;
+    public final static int kFeederArmPort = 3;
+    public final static int kElevatorPort = 2;
+
+    public final static int kForwardLeftPort = 0;
+    public final static int kForwardRightPort = 1;
+    public final static int kMiddleLeftPort = 5;
+    public final static int kMiddleRightPort = 6;
+    public final static int kRearLeftPort = 1;
+    public final static int kRearRightPort = 3;
+
     public final static int kJoystick1Port = 0;
 }

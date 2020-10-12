@@ -34,7 +34,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     this.feeder = new FeederSubsystem();
-    this.joystick1 = new XboxController(0);
+    this.joystick1 = new XboxController(Constants.kJoystick1Port);
     configureButtonBindings();
   }
 
