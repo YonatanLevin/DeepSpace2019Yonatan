@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import frc.robot.Constants;
 import poroslib.subsystems.DiffDrivetrain;
 
 public class DriveTrain extends DiffDrivetrain {
@@ -28,7 +29,7 @@ public class DriveTrain extends DiffDrivetrain {
    * Creates a new DriveTrain.
    */
   public DriveTrain() {
-    super(new WPI_TalonSRX(0), new WPI_TalonSRX(0));
+    super(new WPI_TalonSRX(Constants.kForwardLeftPort), new WPI_TalonSRX(Constants.kForwardRightPort));
     this.configMotors();
   }
 
@@ -44,10 +45,10 @@ public class DriveTrain extends DiffDrivetrain {
   private void createMotors() {
     this.masterLeft = (WPI_TalonSRX)this.leftController;
     this.masterRight = (WPI_TalonSRX)this.rightController;
-    this.middleLeft = new WPI_TalonSRX(0);
-    this.middleRight = new WPI_TalonSRX(0);
-    this.rearLeft = new WPI_VictorSPX(0);
-    this.rearRight = new WPI_VictorSPX(0);
+    this.middleLeft = new WPI_TalonSRX(Constants.kMiddleLeftPort);
+    this.middleRight = new WPI_TalonSRX(Constants.kMiddleRightPort);
+    this.rearLeft = new WPI_VictorSPX(Constants.kRearLeftPort);
+    this.rearRight = new WPI_VictorSPX(Constants.kRearRightPort);
   }
 
   private void configFollowers() {
@@ -89,13 +90,13 @@ public class DriveTrain extends DiffDrivetrain {
   @Override
   public int getRawLeftPosition() {
     // TODO Auto-generated method stub
-    return 0;
+    return this.masterLeft.getSelectedSensorPosition();
   }
 
   @Override
   public int getRawRightPosition() {
     // TODO Auto-generated method stub
-    return 0;
+    return this.masterRight.getSelectedSensorPosition();
   }
 
   @Override
