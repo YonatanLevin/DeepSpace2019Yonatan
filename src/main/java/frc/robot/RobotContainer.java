@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.coreCommands.FeederCommands.ActivateFeeder;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.FeederArmSubsystem;
 import frc.robot.subsystems.FeederSubsystem;
 
 /**
@@ -27,13 +30,19 @@ public class RobotContainer {
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final FeederSubsystem feeder;
+  private final ElevatorSubsystem elevator;
+  private final FeederArmSubsystem arm;
   private final XboxController joystick1;
+  private final DriveTrain driveTrain;
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     // Configure the button bindings
     this.feeder = new FeederSubsystem();
+    this.elevator = new ElevatorSubsystem();
+    this.arm = new FeederArmSubsystem();
+    this.driveTrain = new DriveTrain();
     this.joystick1 = new XboxController(Constants.kJoystick1Port);
     configureButtonBindings();
   }
