@@ -25,6 +25,18 @@ public class ActivateFeeder extends CommandBase {
     addRequirements(feeder);
   }
 
+  /**
+   * ActivateFeeder with timeout
+   * @param duration in seconds
+   */
+  public ActivateFeeder(FeederSubsystem feeder, double power, double duration) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.feeder = feeder;
+    this.power = power;
+    addRequirements(feeder);
+    this.withTimeout(duration);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
