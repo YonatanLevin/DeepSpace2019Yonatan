@@ -48,6 +48,10 @@ public class ElevatorSubsystem extends SubsystemBase {
     this.master.stopMotor();
   }
 
+  public int getPosition() {
+    return this.master.getSelectedSensorPosition();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
