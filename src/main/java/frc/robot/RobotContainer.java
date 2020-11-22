@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.coreCommands.ElevatorCommands.DebagActivateElevator;
 import frc.robot.commands.coreCommands.FeederCommands.ActivateFeeder;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -54,8 +55,13 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    //ActivateFeeder button A
     JoystickButton bActivateFeeder = new JoystickButton(this.joystick1, 1);
     bActivateFeeder.whenHeld(new ActivateFeeder(this.feeder, 0.8));
+
+    //DebagActivateElevator button B
+    JoystickButton bDebagActivateElevator = new JoystickButton(this.joystick1, 2);
+    bDebagActivateElevator.whenHeld(new DebagActivateElevator(this.elevator));
   }
 
 

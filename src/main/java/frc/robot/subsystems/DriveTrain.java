@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -44,6 +45,7 @@ public class DriveTrain extends DiffDrivetrain {
     this.setNeutralModes();
     this.setInvertions();
     this.setSensors();
+
   }
 
   private void createMotors() {
@@ -87,6 +89,19 @@ public class DriveTrain extends DiffDrivetrain {
     this.masterRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     this.navx = new AHRS(SPI.Port.kMXP);
   }
+
+  public void configPIDSlot(double kp, double ki, double kd, int slot){
+    this.masterLeft.config_kP(slot, kp);
+    this.masterLeft.config_kI(slot, ki);
+    this.masterLeft.config_kD(slot, kd);
+  }
+
+  public void setPosition(double pos){
+    this.masterLeft.set(ControlMode.Position, pos);
+    this.masterRight.set(ControlMode.Position, pos);
+  }
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

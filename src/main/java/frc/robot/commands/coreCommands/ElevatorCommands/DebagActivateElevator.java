@@ -11,25 +11,27 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class ActivateElevator extends CommandBase {
-  /**
-   * Creates a new ActivateFeeder.
-   */
+public class DebagActivateElevator extends CommandBase {
 
   private final ElevatorSubsystem elevator;
-  private final double power;
+  private double power;
 
-  public ActivateElevator(ElevatorSubsystem elevator, double power) {
+  /**
+   * Creates a new DebagActivateElevator.
+   */
+  public DebagActivateElevator(ElevatorSubsystem elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.elevator = elevator;
-    this.power = power;
+    this.power = 0;
+    SmartDashboard.putNumber("power", 0);
     addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.elevator.set(power);
+    this.power = SmartDashboard.getNumber("power", 0);
+    this.elevator.set(this.power);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

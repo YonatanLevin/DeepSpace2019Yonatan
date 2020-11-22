@@ -5,31 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.coreCommands.ElevatorCommands;
+package frc.robot.commands.coreCommands.DriveTrainSubsystem;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.DriveTrain;
 
-public class ActivateElevator extends CommandBase {
+public class PIDDriveForward extends CommandBase {
+
+  private final DriveTrain driveTrain;
+  private final double distance;
+  private final double tolarance;
+  private double endPosition;
+
   /**
-   * Creates a new ActivateFeeder.
+   * Creates a new PIDDriveForward.
    */
-
-  private final ElevatorSubsystem elevator;
-  private final double power;
-
-  public ActivateElevator(ElevatorSubsystem elevator, double power) {
+  public PIDDriveForward(DriveTrain driveTrain, double distance, double kp, double ki, double kd, double tolarance) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.elevator = elevator;
-    this.power = power;
-    addRequirements(elevator);
+    this.driveTrain = driveTrain;
+    this.distance = distance;
+    this.driveTrain.configPIDSlot(kp, kd, kd, 4);
+    this.tolarance = tolarance;
+    addRequirements(driveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.elevator.set(power);
+    this.endPosition = this.driveTrain.getRawLeftPosition() + this.distance;
+    this.driveTrain.setPosition(this.endPosition);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -40,12 +45,12 @@ public class ActivateElevator extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    this.elevator.stop();
+    this.driveTrain.tankDrive(0, 0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return this.driveTrain.getRawLeftPosition() > this.endPosition - this.tolarance && this.driveTrain.getRawLeftPosition() < this.endPosition + this.tolarance;
   }
 }

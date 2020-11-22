@@ -35,6 +35,10 @@ public class FeederArmSubsystem extends SubsystemBase {
     this.master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
   }
 
+  public int getPosition(){
+    return this.master.getSelectedSensorPosition();
+  }
+
   public void set(double power) {
     this.master.set(ControlMode.PercentOutput,power);
   }
