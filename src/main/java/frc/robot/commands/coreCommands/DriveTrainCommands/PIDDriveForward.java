@@ -5,9 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.coreCommands.DriveTrainSubsystem;
+package frc.robot.commands.coreCommands.DriveTrainCommands;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
@@ -25,7 +24,7 @@ public class PIDDriveForward extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveTrain = driveTrain;
     this.distance = distance;
-    this.driveTrain.configPIDSlot(kp, kd, kd, 4);
+    this.driveTrain.configPIDSlot(kp, ki, kd, 4);
     this.tolarance = tolarance;
     addRequirements(driveTrain);
   }
