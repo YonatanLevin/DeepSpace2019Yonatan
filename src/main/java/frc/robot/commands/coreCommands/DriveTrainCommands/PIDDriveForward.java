@@ -24,7 +24,7 @@ public class PIDDriveForward extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveTrain = driveTrain;
     this.distance = distance;
-    this.driveTrain.configPIDSlot(kp, ki, kd, 4);
+    this.driveTrain.configPIDSlot(kp, ki, kd, driveTrain.getPIDSlot());
     this.tolarance = tolarance;
     addRequirements(driveTrain);
   }

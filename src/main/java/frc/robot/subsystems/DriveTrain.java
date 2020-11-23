@@ -28,6 +28,8 @@ public class DriveTrain extends DiffDrivetrain {
   private WPI_VictorSPX rearLeft;
   private WPI_VictorSPX rearRight;
 
+  private final int pidSlot = 4;
+
   private AHRS navx;
 
   /**
@@ -123,5 +125,9 @@ public class DriveTrain extends DiffDrivetrain {
   public double getHeading() {
     // TODO Auto-generated method stub
     return this.navx.getYaw();
+  }
+
+  public int getPIDSlot(){
+    return this.pidSlot;
   }
 }
