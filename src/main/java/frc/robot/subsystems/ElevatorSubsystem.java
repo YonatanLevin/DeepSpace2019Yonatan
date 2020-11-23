@@ -71,7 +71,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     this.master.set(ControlMode.Position, target);
   }
 
-  public void configPIDSlot(int kp, int ki, int kd, int kf, int slot){
+  public void configPIDSlot(double kp, double ki, double kd, double kf, int slot){
     this.master.config_kP(slot, kp);
     this.master.config_kI(slot, ki);
     this.master.config_kD(slot, kd);
