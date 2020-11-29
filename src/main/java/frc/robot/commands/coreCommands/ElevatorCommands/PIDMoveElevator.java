@@ -39,7 +39,7 @@ public class PIDMoveElevator extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.elevatorSubsystem.configPIDSlot(kp, ki, kd, kf, elevatorSubsystem.getPIDSlot());
+    this.elevatorSubsystem.configPIDSlot(kp, ki, kd, kf, elevatorSubsystem.getPIDSlotID());
     this.elevatorSubsystem.setPosition(this.target);
   }
 
