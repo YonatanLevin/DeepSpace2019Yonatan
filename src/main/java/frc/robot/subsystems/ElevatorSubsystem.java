@@ -27,9 +27,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   private final WPI_TalonSRX master;
 
-  private final int pidSlot = 4;
+  private final int pidSlotID;
   
   public ElevatorSubsystem() {
+    this.pidSlotID = 3;
     this.master = new WPI_TalonSRX(Constants.kElevatorPort);
     this.configMotor();
     this.stop();
@@ -63,11 +64,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Elevator position", getPosition());
   }
 
-  public int getPIDSlot(){
-    return this.pidSlot;
+  public int getPIDSlotID(){
+    return this.pidSlotID;
   }
 
   public void setPosition(int target){
+    this.master.selectProfileSlot(this.pidSlotID, 0);
     this.master.set(ControlMode.Position, target);
   }
 
