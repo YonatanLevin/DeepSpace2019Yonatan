@@ -22,8 +22,10 @@ public class FeederArmSubsystem extends SubsystemBase {
    */
 
   private final WPI_TalonSRX master;
+  private final int pidSlotID;
   
   public FeederArmSubsystem() {
+    this.pidSlotID = 3;
     this.master = new WPI_TalonSRX(Constants.kFeederArmPort);
     this.configMotor();
     this.stop();
@@ -45,6 +47,22 @@ public class FeederArmSubsystem extends SubsystemBase {
 
   public void stop() {
     this.master.stopMotor();
+  }
+
+  public int getPidSlotID() {
+    return this.pidSlotID;
+  }
+
+  public void configPIDSlot(double kp, double ki, double kd, double kf, int slot){
+    this.master.config_kP(slot, kp);
+    this.master.config_kI(slot, ki);
+    this.master.config_kD(slot, kd);
+    this.master.config_kF(slot, kf);
+  }
+
+  public void setPosition(int pos){
+    this.master.selectProfileSlot(this.pidSlotID, 0);
+    this.master.set(ControlMode.Position, pos);
   }
 
   @Override
