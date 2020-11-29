@@ -28,7 +28,7 @@ public class DriveTrain extends DiffDrivetrain {
   private WPI_VictorSPX rearLeft;
   private WPI_VictorSPX rearRight;
 
-  private final int pidSlot = 4;
+  private final int pidSlot;
 
   private AHRS navx;
 
@@ -37,6 +37,7 @@ public class DriveTrain extends DiffDrivetrain {
    */
   public DriveTrain() {
     super(new WPI_TalonSRX(Constants.kForwardLeftPort), new WPI_TalonSRX(Constants.kForwardRightPort));
+    this.pidSlot = 4;
     this.configMotors();
   }
 
@@ -103,6 +104,9 @@ public class DriveTrain extends DiffDrivetrain {
   }
 
   public void setPosition(double pos){
+    this.masterLeft.selectProfileSlot(this.pidSlot, 0);
+    this.masterRight.selectProfileSlot(this.pidSlot, 0);
+
     this.masterLeft.set(ControlMode.Position, pos);
     this.masterRight.set(ControlMode.Position, pos);
   }
