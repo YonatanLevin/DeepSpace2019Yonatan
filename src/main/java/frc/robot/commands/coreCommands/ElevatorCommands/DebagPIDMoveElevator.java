@@ -38,7 +38,7 @@ public class DebagPIDMoveElevator extends CommandBase {
   @Override
   public void initialize() {
     this.updateDashboardValues();
-    this.elevatorSubsystem.configPIDSlot(kp, ki, kd, kf, elevatorSubsystem.getPIDSlotID());
+    this.elevatorSubsystem.configSlot(kp, ki, kd, kf, elevatorSubsystem.getPIDSlotID());
     this.elevatorSubsystem.setPosition(this.target);
   }
 

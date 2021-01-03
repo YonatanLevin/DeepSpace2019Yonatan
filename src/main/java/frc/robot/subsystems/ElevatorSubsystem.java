@@ -28,6 +28,29 @@ public class ElevatorSubsystem extends SubsystemBase {
   private final WPI_TalonSRX master;
 
   private final int pidSlotID;
+
+  private final int kMaxAcceleration = 0;
+  private final int kCruiseVelocity = 0;
+  private final int kMagicP = 0;
+  private final int kMagicI = 0;
+  private final int kMagicD = 0;
+  private final int kMagicF = 1023 / kCruiseVelocity;
+  private final int magicSlotID = 0;
+
+  public enum ElevatorPosition{
+    Down(0),
+    Up(100);
+
+    private final int position;
+
+    private ElevatorPosition(int position) {
+      this.position = position;
+    }
+
+    public int getPosition() {
+      return position;
+    }
+  }
   
   public ElevatorSubsystem() {
     this.pidSlotID = 3;
@@ -41,7 +64,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     this.master.setInverted(InvertType.None);
     this.master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
     this.master.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
-    this.master.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed, Constants.kMiddleLeftPort);
+    this.master.configReverseLimitSwitchSource(RemoteLimitSwitchSource.RemoteTalonSRX, LimitSwitchNormal.NormallyClosed,
+                                              Constants.kMiddleLeftPort);
+
+    this.master.configMotionAcceleration(this.kMaxAcceleration);
+    this.master.configMotionCruiseVelocity(this.kCruiseVelocity);
+    this.configSlot(this.kMagicP, this.kMagicI, this.kMagicD, this.kMagicF, this.magicSlotID);
     }
   
   public void set(double power) {
@@ -73,10 +101,19 @@ public class ElevatorSubsystem extends SubsystemBase {
     this.master.set(ControlMode.Position, target);
   }
 
-  public void configPIDSlot(double kp, double ki, double kd, double kf, int slot){
+  public void configSlot(double kp, double ki, double kd, double kf, int slot){
     this.master.config_kP(slot, kp);
     this.master.config_kI(slot, ki);
     this.master.config_kD(slot, kd);
     this.master.config_kF(slot, kf);
+  }
+
+  public int getMagicSlotID(){
+    return this.magicSlotID;
+  }
+
+  public void setMagicPosition(int target){
+    this.master.selectProfileSlot(this.magicSlotID, 0);
+    this.master.set(ControlMode.MotionMagic, target);
   }
 }

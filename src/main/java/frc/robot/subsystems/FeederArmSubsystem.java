@@ -22,10 +22,17 @@ public class FeederArmSubsystem extends SubsystemBase {
    */
 
   private final WPI_TalonSRX master;
-  private final int pidSlotID;
+  private final int pidSlotID = 3;
+  private final int magicSlotID = 0;
+
+  private final int kMaxAcceleration = 0;
+  private final int kCruiseVelocity = 0;
+  private final int kMagicP = 0;
+  private final int kMagicI = 0;
+  private final int kMagicD = 0;
+  private final int kMagicF = 1023 / kCruiseVelocity;
   
   public FeederArmSubsystem() {
-    this.pidSlotID = 3;
     this.master = new WPI_TalonSRX(Constants.kFeederArmPort);
     this.configMotor();
     this.stop();
@@ -35,6 +42,10 @@ public class FeederArmSubsystem extends SubsystemBase {
     this.master.setNeutralMode(NeutralMode.Brake);
     this.master.setInverted(InvertType.None);
     this.master.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute);
+
+    this.master.configMotionAcceleration(this.kMaxAcceleration);
+    this.master.configMotionCruiseVelocity(this.kCruiseVelocity);
+    this.configSlot(this.kMagicP, this.kMagicI, this.kMagicD, this.kMagicF, this.magicSlotID);
   }
 
   public int getPosition(){
@@ -53,7 +64,7 @@ public class FeederArmSubsystem extends SubsystemBase {
     return this.pidSlotID;
   }
 
-  public void configPIDSlot(double kp, double ki, double kd, double kf, int slot){
+  public void configSlot(double kp, double ki, double kd, double kf, int slot){
     this.master.config_kP(slot, kp);
     this.master.config_kI(slot, ki);
     this.master.config_kD(slot, kd);
@@ -63,6 +74,11 @@ public class FeederArmSubsystem extends SubsystemBase {
   public void setPosition(int pos){
     this.master.selectProfileSlot(this.pidSlotID, 0);
     this.master.set(ControlMode.Position, pos);
+  }
+
+  public void setMagic(int pos){
+    this.master.selectProfileSlot(this.magicSlotID, 0);
+    this.master.set(ControlMode.MotionMagic, pos);
   }
 
   @Override
